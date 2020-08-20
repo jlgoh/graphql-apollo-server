@@ -37,7 +37,6 @@ class JSONServerApi extends RESTDataSource {
       contactNo,
       monthlySalary,
     });
-    console.log(res.status);
 
     return this.employeeReducer(res);
   }

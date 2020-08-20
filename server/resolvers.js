@@ -1,10 +1,12 @@
 const resolvers = {
+  //Queries as specified in schema.
   Query: {
     employees: (_, __, { dataSources }) =>
       dataSources.jsonServerAPI.getEmployees(),
     employee: (_, { id }, { dataSources }) =>
       dataSources.jsonServerAPI.getEmployee(id),
   },
+  //Mutations as specified in schema.
   Mutation: {
     addEmployee: (
       _,
