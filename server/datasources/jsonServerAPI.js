@@ -18,6 +18,39 @@ class JSONServerApi extends RESTDataSource {
     return this.employeeReducer(res);
   }
 
+  async createEmployee(name, companyEmail, contactNo, monthlySalary) {
+    const res = await this.post("employees", {
+      name,
+      companyEmail,
+      contactNo,
+      monthlySalary,
+    });
+
+    return this.employeeReducer(res);
+  }
+
+  async updateEmployee(id, name, companyEmail, contactNo, monthlySalary) {
+    const res = await this.put(`employees/${id}`, {
+      id,
+      name,
+      companyEmail,
+      contactNo,
+      monthlySalary,
+    });
+    console.log(res.status);
+
+    return this.employeeReducer(res);
+  }
+
+  async deleteEmployee(id) {
+    try {
+      await this.delete(`employees/${id}`);
+      return "Deleted Successfully";
+    } catch (err) {
+      return "Not deleted";
+    }
+  }
+
   // Transform each returned Employee into expected format
   // in accordance with schema
   employeeReducer(employee) {

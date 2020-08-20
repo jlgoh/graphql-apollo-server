@@ -3,15 +3,15 @@
     {
       "id": 1,
       "name": "Jun",
-      "companyEmail": "jun@s.com",
-      "contactNo": "91234567",
-      "monthlySalary": 500
+      "companyEmail": "j@g.com",
+      "contactNo": "98786751",
+      "monthlySalary": 650
     },
     {
       "id": 2,
-      "name": "Alex",
-      "companyEmail": "alex@s.com",
-      "contactNo": "91234568",
+      "name": "Nicole",
+      "companyEmail": "n@g.com",
+      "contactNo": "98786751",
       "monthlySalary": 1000
     }
   ]
