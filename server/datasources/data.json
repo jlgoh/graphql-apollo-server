@@ -1,0 +1,18 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Jun",
+      "companyEmail": "jun@s.com",
+      "contactNo": "91234567",
+      "monthlySalary": 500
+    },
+    {
+      "id": 2,
+      "name": "Alex",
+      "companyEmail": "alex@s.com",
+      "contactNo": "91234568",
+      "monthlySalary": 1000
+    }
+  ]
+}
