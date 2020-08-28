@@ -7,9 +7,9 @@ import { Collapse } from "antd";
 const { Panel } = Collapse;
 
 // Fetch remote data
-const GET_ATTENDANCE = gql`
-  query employees {
-    employees {
+const GET_TODAY_ATTENDANCE = gql`
+  query todayAttendance {
+    todayAttendance {
       id
       name
       attendance {
@@ -25,7 +25,7 @@ const GET_ATTENDANCE = gql`
 `;
 
 const AttendanceToday = () => {
-  const { loading, error, data } = useQuery(GET_ATTENDANCE);
+  const { loading, error, data } = useQuery(GET_TODAY_ATTENDANCE);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -35,49 +35,31 @@ const AttendanceToday = () => {
   const notCheckedIn = [];
 
   //Get Today Attendees.
-  data.employees.forEach((employee) => {
-    if (employee.attendance.length) {
-      // TODO: Shift this filter logic elsewhere.
-      let attendance = employee.attendance.filter(
-        (record) =>
-          new Date(record.checkInDate).toLocaleDateString() ===
-          new Date().toLocaleDateString() //Today's date
-      )[0];
-      if (!attendance) {
-        notCheckedIn.push({
-          name: employee.name,
-        });
-      } else {
-        let { checkInDate, checkInTemp, task } = attendance;
-        if (!attendance.checkOutDate) {
-          checkedIn.push({
-            name: employee.name,
-            checkInDate,
-            checkInTemp,
-            task,
-          });
-        } else {
-          let { checkOutDate, checkOutTemp, statusUpdate } = attendance;
-          checkedOut.push({
-            name: employee.name,
-            checkInDate,
-            checkInTemp,
-            task,
-            checkOutDate,
-            checkOutTemp,
-            statusUpdate,
-          });
-        }
+  data.todayAttendance.forEach((employee) => {
+    if (!employee.attendance.length) {
+      notCheckedIn.push(employee);
+    } else {
+      if (
+        employee.attendance[0].checkInDate &&
+        !employee.attendance[0].checkOutDate
+      ) {
+        checkedIn.push(employee);
+      } else if (
+        employee.attendance[0].checkInDate &&
+        employee.attendance[0].checkOutDate
+      ) {
+        checkedOut.push(employee);
       }
     }
   });
+
   return (
     <Fragment>
       <Divider orientation="left">Checked In</Divider>
       <List
         itemLayout="horizontal"
         dataSource={checkedIn}
-        renderItem={({ name, task, checkInDate, checkInTemp }) => (
+        renderItem={({ name, attendance }) => (
           <Fragment>
             <List.Item>
               <List.Item.Meta
@@ -85,12 +67,12 @@ const AttendanceToday = () => {
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 }
                 title={<a href="https://ant.design">{name}</a>}
-                description={"Task Today: " + task}
+                description={"Task Today: " + attendance[0].task}
               />
               <Collapse ghost>
                 <Panel header="Check In Details" key="1">
-                  <p>Date & Time Checked In: {checkInDate}</p>
-                  <p>Temperature on Check In: {checkInTemp}°C</p>
+                  <p>Date & Time Checked In: {attendance[0].checkInDate}</p>
+                  <p>Temperature on Check In: {attendance[0].checkInTemp}°C</p>
                 </Panel>
               </Collapse>
             </List.Item>
@@ -101,15 +83,7 @@ const AttendanceToday = () => {
       <List
         itemLayout="horizontal"
         dataSource={checkedOut}
-        renderItem={({
-          name,
-          task,
-          checkInDate,
-          checkInTemp,
-          checkOutDate,
-          checkOutTemp,
-          statusUpdate,
-        }) => (
+        renderItem={({ name, attendance }) => (
           <Fragment>
             <List.Item>
               <List.Item.Meta
@@ -117,15 +91,17 @@ const AttendanceToday = () => {
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 }
                 title={<a href="https://ant.design">{name}</a>}
-                description={"Status Update: " + statusUpdate}
+                description={"Status Update: " + attendance[0].statusUpdate}
               />
               <Collapse ghost>
                 <Panel header="Check Out Details" key="1">
-                  <p>Date & Time Checked In: {checkInDate}</p>
-                  <p>Temperature on Check In: {checkInTemp}°C</p>
-                  <p>Task Today: {task}</p>
-                  <p>Date & Time Checked Out: {checkOutDate}</p>
-                  <p>Temperature on Check Out: {checkOutTemp}°C</p>
+                  <p>Date & Time Checked In: {attendance[0].checkInDate}</p>
+                  <p>Temperature on Check In: {attendance[0].checkInTemp}°C</p>
+                  <p>Task Today: {attendance[0].task}</p>
+                  <p>Date & Time Checked Out: {attendance[0].checkOutDate}</p>
+                  <p>
+                    Temperature on Check Out: {attendance[0].checkOutTemp}°C
+                  </p>
                 </Panel>
               </Collapse>
             </List.Item>

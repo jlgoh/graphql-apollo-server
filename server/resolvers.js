@@ -5,6 +5,8 @@ const resolvers = {
       dataSources.jsonServerAPI.getEmployees(),
     employee: (_, { id }, { dataSources }) =>
       dataSources.jsonServerAPI.getEmployee(id),
+    todayAttendance: (_, __, { dataSources }) =>
+      dataSources.jsonServerAPI.getTodayAttendance(),
   },
   //Mutations as specified in schema.
   Mutation: {

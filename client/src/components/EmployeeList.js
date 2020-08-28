@@ -5,30 +5,34 @@ import CheckInOutDialog from "./CheckInOutDialog";
 import { dialogOpenVar } from "../cache";
 
 // Fetch remote data
-const GET_EMPLOYEES = gql`
-  query employees {
-    employees {
+const GET_TODAY_ATTENDANCE = gql`
+  query todayAttendance {
+    todayAttendance {
       id
       name
       role
       dept
+      attendance {
+        checkInDate
+        checkOutDate
+      }
     }
   }
 `;
 
 const EmployeeList = () => {
-  const { loading, error, data } = useQuery(GET_EMPLOYEES);
+  const { loading, error, data } = useQuery(GET_TODAY_ATTENDANCE);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
   return (
     data &&
-    data.employees && (
+    data.todayAttendance && (
       <Fragment>
         <Table
           columns={columns}
-          dataSource={data.employees.map((employee) => ({
+          dataSource={data.todayAttendance.map((employee) => ({
             ...employee,
             key: employee.id,
           }))}
@@ -73,14 +77,28 @@ const columns = [
   },
   {
     title: "Action",
-    key: "action",
-    render: () => (
-      <Space size="middle">
-        <Button onClick={() => dialogOpenVar(true)} type="primary">
-          Check In
-        </Button>
-      </Space>
-    ),
+    dataIndex: "attendance",
+    key: "attendance",
+    render: (attendance) => {
+      return (
+        <Space size="middle">
+          <Button
+            style={{ minWidth: 113 }}
+            disabled={attendance.length && attendance[0].checkOutDate}
+            onClick={() => dialogOpenVar(true)}
+            shape="round"
+            type="primary"
+            danger={attendance.length && !attendance[0].checkOutDate}
+          >
+            {!attendance.length
+              ? "Check In"
+              : attendance[0].checkOutDate
+              ? "Checked Out"
+              : "Check Out"}
+          </Button>
+        </Space>
+      );
+    },
   },
 ];
 

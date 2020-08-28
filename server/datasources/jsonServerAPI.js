@@ -18,6 +18,21 @@ class JSONServerApi extends RESTDataSource {
     return this.employeeReducer(res);
   }
 
+  async getTodayAttendance() {
+    const res = await this.get("employees");
+
+    return res.map((employee) => {
+      employee = this.employeeReducer(employee);
+      employee.attendance = employee.attendance.filter(
+        ({ checkInDate }) =>
+          new Date(checkInDate).toLocaleDateString() ===
+          new Date().toLocaleDateString() //Today's date
+      );
+
+      return employee;
+    });
+  }
+
   async createEmployee(
     name,
     companyEmail,

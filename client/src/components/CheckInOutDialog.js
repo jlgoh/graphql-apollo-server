@@ -27,7 +27,6 @@ const CheckInOutDialog = () => {
     dialogOpenVar(false);
   };
 
-  console.log("render", dialogOpenVar());
   return (
     <Modal
       title="Check In"

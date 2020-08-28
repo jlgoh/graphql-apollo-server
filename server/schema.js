@@ -24,6 +24,7 @@ const typeDefs = gql`
   type Query {
     employees: [Employee]
     employee(id: ID!): Employee
+    todayAttendance: [Employee]
   }
 
   type Mutation {
