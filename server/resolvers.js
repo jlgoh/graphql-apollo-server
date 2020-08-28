@@ -10,7 +10,7 @@ const resolvers = {
   Mutation: {
     addEmployee: (
       _,
-      { employee: { id, name, email, contactNo, salary } },
+      { employee: { id, name, email, contactNo, salary, role, dept } },
       { dataSources }
     ) => {
       return {
@@ -20,14 +20,16 @@ const resolvers = {
           name,
           email,
           contactNo,
-          salary
+          salary,
+          role,
+          dept
         ),
       };
     },
 
     editEmployeeInfo: (
       _,
-      { employee: { id, name, email, contactNo, salary } },
+      { employee: { id, name, email, contactNo, salary, role, dept } },
       { dataSources }
     ) => {
       return {
@@ -38,7 +40,9 @@ const resolvers = {
           name,
           email,
           contactNo,
-          salary
+          salary,
+          role,
+          dept
         ),
       };
     },

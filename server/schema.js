@@ -7,6 +7,8 @@ const typeDefs = gql`
     email: String
     contactNo: String!
     salary: Int
+    role: String
+    dept: String
     attendance: [DailyRecord]
   }
 
@@ -42,6 +44,8 @@ const typeDefs = gql`
     email: String
     contactNo: String!
     salary: Int
+    role: String
+    dept: String
   }
 
   input CheckInInput {

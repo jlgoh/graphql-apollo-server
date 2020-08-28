@@ -18,25 +18,44 @@ class JSONServerApi extends RESTDataSource {
     return this.employeeReducer(res);
   }
 
-  async createEmployee(name, companyEmail, contactNo, monthlySalary) {
+  async createEmployee(
+    name,
+    companyEmail,
+    contactNo,
+    monthlySalary,
+    role,
+    dept
+  ) {
     const res = await this.post("employees", {
       name,
       companyEmail,
       contactNo,
       monthlySalary,
+      role,
+      dept,
       attendance: [],
     });
 
     return this.employeeReducer(res);
   }
 
-  async updateEmployee(id, name, companyEmail, contactNo, monthlySalary) {
+  async updateEmployee(
+    id,
+    name,
+    companyEmail,
+    contactNo,
+    monthlySalary,
+    role,
+    dept
+  ) {
     const res = await this.patch(`employees/${id}`, {
       id,
       name,
       companyEmail,
       contactNo,
       monthlySalary,
+      role,
+      dept,
     });
 
     return this.employeeReducer(res);
@@ -91,6 +110,8 @@ class JSONServerApi extends RESTDataSource {
       email: employee.companyEmail,
       contactNo: employee.contactNo,
       salary: employee.monthlySalary,
+      role: employee.role,
+      dept: employee.dept,
       attendance: employee.attendance,
     };
   }

@@ -6,7 +6,17 @@
       "companyEmail": "j@g.com",
       "contactNo": "98786751",
       "monthlySalary": 650,
+      "role": "Software Engineer",
+      "dept": "Technology",
       "attendance": [
+        {
+          "checkInDate": "8/27/2020, 12:20:30 PM",
+          "checkInTemp": 36.7,
+          "task": "Integration testing.",
+          "checkOutDate": "8/27/2020, 12:24:31 PM",
+          "checkOutTemp": 37,
+          "statusUpdate": "Integration testing: React components for Dashboard done."
+        },
         {
           "checkInDate": "8/28/2020, 12:20:30 PM",
           "checkInTemp": 36.7,
@@ -18,12 +28,39 @@
       ]
     },
     {
-      "id": 2,
       "name": "Nicole",
       "companyEmail": "n@g.com",
       "contactNo": "98786751",
       "monthlySalary": 1000,
-      "attendance": []
+      "role": "Marketing Intern",
+      "dept": "Marketing",
+      "attendance": [
+        {
+          "checkInDate": "8/28/2020, 4:02:49 PM",
+          "checkInTemp": 35.7,
+          "task": "Prototyping design for Project Alpha."
+        }
+      ],
+      "id": 2
+    },
+    {
+      "name": "Jack",
+      "companyEmail": "j@g.com",
+      "contactNo": "9878672",
+      "monthlySalary": 1000,
+      "role": "Marketing Intern",
+      "dept": "Marketing",
+      "attendance": [
+        {
+          "checkInDate": "8/27/2020, 4:02:49 PM",
+          "checkInTemp": 35.7,
+          "task": "Prototyping design for Project Alpha.",
+          "checkOutDate": "8/27/2020, 4:24:31 PM",
+          "checkOutTemp": 37,
+          "statusUpdate": "Outline done: to discuss with client more."
+        }
+      ],
+      "id": 3
     }
   ]
 }
