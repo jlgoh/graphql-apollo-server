@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Table, Tag, Space, Button } from "antd";
 import { gql, useQuery } from "@apollo/client";
 import CheckInOutDialog from "./CheckInOutDialog";
-import { dialogOpenVar } from "../cache";
+import { dialogOpenVar, selectedCheckInOutVar } from "../cache";
 
 // Fetch remote data
 const GET_TODAY_ATTENDANCE = gql`
@@ -79,13 +79,17 @@ const columns = [
     title: "Action",
     dataIndex: "attendance",
     key: "attendance",
-    render: (attendance) => {
+    render: (text, { name, attendance }, index) => {
       return (
         <Space size="middle">
           <Button
             style={{ minWidth: 113 }}
             disabled={attendance.length && attendance[0].checkOutDate}
-            onClick={() => dialogOpenVar(true)}
+            onClick={() => {
+              // Pass these to the Apollo cache
+              dialogOpenVar(true);
+              selectedCheckInOutVar({ id: index + 1, name });
+            }}
             shape="round"
             type="primary"
             danger={attendance.length && !attendance[0].checkOutDate}

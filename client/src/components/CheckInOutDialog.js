@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
+import { Modal, Typography } from "antd";
 import { useQuery, gql } from "@apollo/client";
 import { dialogOpenVar } from "../cache";
 
@@ -10,9 +10,16 @@ const GET_DIALOG_STATE = gql`
   }
 `;
 
+const GET_SELECTED = gql`
+  query GetSelectedEmployee {
+    selectedCheckInOut @client
+  }
+`;
+
 const CheckInOutDialog = () => {
-  const { data } = useQuery(GET_DIALOG_STATE);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const dialog = useQuery(GET_DIALOG_STATE);
+  const selected = useQuery(GET_SELECTED);
 
   const handleOk = () => {
     setConfirmLoading(true);
@@ -30,12 +37,15 @@ const CheckInOutDialog = () => {
   return (
     <Modal
       title="Check In"
-      visible={data.dialogOpen}
+      visible={dialog.data.dialogOpen}
       onOk={handleOk}
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
     >
-      Check In
+      <Typography.Title level={5}>
+        {selected.data.selectedCheckInOut.name}
+      </Typography.Title>
+      Current Date & Time: {new Date().toLocaleString()}
     </Modal>
   );
 };
