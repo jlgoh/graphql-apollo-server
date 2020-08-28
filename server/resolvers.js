@@ -24,6 +24,7 @@ const resolvers = {
         ),
       };
     },
+
     editEmployeeInfo: (
       _,
       { employee: { id, name, email, contactNo, salary } },
@@ -41,8 +42,43 @@ const resolvers = {
         ),
       };
     },
+
     removeEmployee: (_, { id }, { dataSources }) =>
       dataSources.jsonServerAPI.deleteEmployee(id),
+
+    checkInEmployee: (
+      _,
+      { id, dailyRecord: { checkInTemp, task } },
+      { dataSources }
+    ) => {
+      return {
+        success: true,
+        message: `Employee with id ${id} has successfully checked in`,
+        employee: dataSources.jsonServerAPI.checkInEmployee(
+          id,
+          new Date().toLocaleString(),
+          checkInTemp,
+          task
+        ),
+      };
+    },
+
+    checkOutEmployee: (
+      _,
+      { id, dailyRecord: { checkOutTemp, statusUpdate } },
+      { dataSources }
+    ) => {
+      return {
+        success: true,
+        message: `Employee with id ${id} has successfully checked out`,
+        employee: dataSources.jsonServerAPI.checkOutEmployee(
+          id,
+          new Date().toLocaleString(),
+          checkOutTemp,
+          statusUpdate
+        ),
+      };
+    },
   },
 };
 module.exports = resolvers;

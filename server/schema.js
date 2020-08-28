@@ -7,6 +7,16 @@ const typeDefs = gql`
     email: String
     contactNo: String!
     salary: Int
+    attendance: [DailyRecord]
+  }
+
+  type DailyRecord {
+    checkInDate: String
+    checkInTemp: Float
+    task: String
+    checkOutDate: String
+    checkOutTemp: Float
+    statusUpdate: String
   }
 
   type Query {
@@ -18,6 +28,11 @@ const typeDefs = gql`
     addEmployee(employee: EmployeeInput): EmployeeUpdateResponse
     editEmployeeInfo(employee: EmployeeInput): EmployeeUpdateResponse
     removeEmployee(id: ID!): String
+    checkInEmployee(id: ID!, dailyRecord: CheckInInput): EmployeeUpdateResponse
+    checkOutEmployee(
+      id: ID!
+      dailyRecord: CheckOutInput
+    ): EmployeeUpdateResponse
   }
 
   # To be passed into mutations
@@ -27,6 +42,16 @@ const typeDefs = gql`
     email: String
     contactNo: String!
     salary: Int
+  }
+
+  input CheckInInput {
+    checkInTemp: Float
+    task: String
+  }
+
+  input CheckOutInput {
+    checkOutTemp: Float
+    statusUpdate: String
   }
 
   # Response format for mutations

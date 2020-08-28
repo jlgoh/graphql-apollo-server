@@ -24,13 +24,14 @@ class JSONServerApi extends RESTDataSource {
       companyEmail,
       contactNo,
       monthlySalary,
+      attendance: [],
     });
 
     return this.employeeReducer(res);
   }
 
   async updateEmployee(id, name, companyEmail, contactNo, monthlySalary) {
-    const res = await this.put(`employees/${id}`, {
+    const res = await this.patch(`employees/${id}`, {
       id,
       name,
       companyEmail,
@@ -50,6 +51,37 @@ class JSONServerApi extends RESTDataSource {
     }
   }
 
+  async checkInEmployee(id, checkInDate, checkInTemp, task) {
+    const { attendance } = await this.get(`employees/${id}`);
+
+    //Push check in record to attendance array
+    const update = [...attendance, { checkInDate, checkInTemp, task }];
+
+    const res = await this.patch(`employees/${id}`, { attendance: update });
+
+    return this.employeeReducer(res);
+  }
+
+  async checkOutEmployee(id, checkOutDate, checkOutTemp, statusUpdate) {
+    const { attendance } = await this.get(`employees/${id}`);
+
+    //From atttendance array, update record with same date
+    attendance.forEach((record) => {
+      if (
+        new Date(record.checkInDate).toLocaleDateString() ===
+        new Date(checkOutDate).toLocaleDateString()
+      ) {
+        record.checkOutDate = checkOutDate;
+        record.checkOutTemp = checkOutTemp;
+        record.statusUpdate = statusUpdate;
+      }
+    });
+
+    const res = await this.patch(`employees/${id}`, { attendance });
+
+    return this.employeeReducer(res);
+  }
+
   // Transform each returned Employee into expected format
   // in accordance with schema
   employeeReducer(employee) {
@@ -59,6 +91,7 @@ class JSONServerApi extends RESTDataSource {
       email: employee.companyEmail,
       contactNo: employee.contactNo,
       salary: employee.monthlySalary,
+      attendance: employee.attendance,
     };
   }
 }

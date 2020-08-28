@@ -5,14 +5,25 @@
       "name": "Jun",
       "companyEmail": "j@g.com",
       "contactNo": "98786751",
-      "monthlySalary": 650
+      "monthlySalary": 650,
+      "attendance": [
+        {
+          "checkInDate": "8/28/2020, 12:20:30 PM",
+          "checkInTemp": 36.7,
+          "task": "Integration testing.",
+          "checkOutDate": "8/28/2020, 12:24:31 PM",
+          "checkOutTemp": 37,
+          "statusUpdate": "Integration testing: React components for Dashboard done."
+        }
+      ]
     },
     {
       "id": 2,
       "name": "Nicole",
       "companyEmail": "n@g.com",
       "contactNo": "98786751",
-      "monthlySalary": 1000
+      "monthlySalary": 1000,
+      "attendance": []
     }
   ]
 }
