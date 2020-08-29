@@ -1,0 +1,26 @@
+{
+  "name": "graphql_apollo",
+  "version": "1.0.0",
+  "description": "In the project directory, you can run:",
+  "main": "index.js",
+  "scripts": {
+    "client": "npm run start --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jlgoh/graphql-apollo-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jlgoh/graphql-apollo-server/issues"
+  },
+  "homepage": "https://github.com/jlgoh/graphql-apollo-server#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
