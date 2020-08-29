@@ -40,18 +40,20 @@ const AttendanceToday = () => {
       notCheckedIn.push(employee);
     } else {
       if (
-        employee.attendance[0].checkInDate &&
-        !employee.attendance[0].checkOutDate
+        employee.attendance[employee.attendance.length - 1].checkInDate &&
+        !employee.attendance[employee.attendance.length - 1].checkOutDate
       ) {
         checkedIn.push(employee);
       } else if (
-        employee.attendance[0].checkInDate &&
-        employee.attendance[0].checkOutDate
+        employee.attendance[employee.attendance.length - 1].checkInDate &&
+        employee.attendance[employee.attendance.length - 1].checkOutDate
       ) {
         checkedOut.push(employee);
       }
     }
   });
+
+  console.log(data);
 
   return (
     <Fragment>
@@ -67,12 +69,20 @@ const AttendanceToday = () => {
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 }
                 title={<a href="https://ant.design">{name}</a>}
-                description={"Task Today: " + attendance[0].task}
+                description={
+                  "Task Today: " + attendance[attendance.length - 1].task
+                }
               />
               <Collapse ghost>
                 <Panel header="Check In Details" key="1">
-                  <p>Date & Time Checked In: {attendance[0].checkInDate}</p>
-                  <p>Temperature on Check In: {attendance[0].checkInTemp}°C</p>
+                  <p>
+                    Date & Time Checked In:{" "}
+                    {attendance[attendance.length - 1].checkInDate}
+                  </p>
+                  <p>
+                    Temperature on Check In:{" "}
+                    {attendance[attendance.length - 1].checkInTemp}°C
+                  </p>
                 </Panel>
               </Collapse>
             </List.Item>
@@ -91,16 +101,29 @@ const AttendanceToday = () => {
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 }
                 title={<a href="https://ant.design">{name}</a>}
-                description={"Status Update: " + attendance[0].statusUpdate}
+                description={
+                  "Status Update: " +
+                  attendance[attendance.length - 1].statusUpdate
+                }
               />
               <Collapse ghost>
                 <Panel header="Check Out Details" key="1">
-                  <p>Date & Time Checked In: {attendance[0].checkInDate}</p>
-                  <p>Temperature on Check In: {attendance[0].checkInTemp}°C</p>
-                  <p>Task Today: {attendance[0].task}</p>
-                  <p>Date & Time Checked Out: {attendance[0].checkOutDate}</p>
                   <p>
-                    Temperature on Check Out: {attendance[0].checkOutTemp}°C
+                    Date & Time Checked In:{" "}
+                    {attendance[attendance.length - 1].checkInDate}
+                  </p>
+                  <p>
+                    Temperature on Check In:{" "}
+                    {attendance[attendance.length - 1].checkInTemp}°C
+                  </p>
+                  <p>Task Today: {attendance[attendance.length - 1].task}</p>
+                  <p>
+                    Date & Time Checked Out:{" "}
+                    {attendance[attendance.length - 1].checkOutDate}
+                  </p>
+                  <p>
+                    Temperature on Check Out:{" "}
+                    {attendance[attendance.length - 1].checkOutTemp}°C
                   </p>
                 </Panel>
               </Collapse>

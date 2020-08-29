@@ -26,6 +26,8 @@ const EmployeeList = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
+  console.log(data);
+
   return (
     data &&
     data.todayAttendance && (
@@ -84,19 +86,29 @@ const columns = [
         <Space size="middle">
           <Button
             style={{ minWidth: 113 }}
-            disabled={attendance.length && attendance[0].checkOutDate}
+            disabled={
+              attendance.length &&
+              attendance[attendance.length - 1].checkOutDate
+            }
             onClick={() => {
               // Pass these to the Apollo cache
               dialogOpenVar(true);
-              selectedCheckInOutVar({ id: index + 1, name });
+              selectedCheckInOutVar({
+                id: index + 1,
+                name,
+                action: !attendance.length ? "Check In" : "Check Out",
+              });
             }}
             shape="round"
             type="primary"
-            danger={attendance.length && !attendance[0].checkOutDate}
+            danger={
+              attendance.length &&
+              !attendance[attendance.length - 1].checkOutDate
+            }
           >
             {!attendance.length
               ? "Check In"
-              : attendance[0].checkOutDate
+              : attendance[attendance.length - 1].checkOutDate
               ? "Checked Out"
               : "Check Out"}
           </Button>
