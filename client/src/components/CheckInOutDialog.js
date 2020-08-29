@@ -75,9 +75,10 @@ const CheckInOutDialog = () => {
   const [checkOut] = useMutation(CHECK_OUT);
 
   const handleOk = async () => {
-    setConfirmLoading(true);
-    form.submit();
     try {
+      setConfirmLoading(true);
+      await form.validateFields();
+
       if (selected.data.selectedCheckInOut.action === "Check In") {
         await checkIn({
           variables: {
